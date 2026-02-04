@@ -1,0 +1,9 @@
+#veriosn 430 core
+#define MAX_STEPS 56
+#define MAX_HIT_DISTANCE 0.001
+#define MAX_TRACE_DISTANCE 1000.0
+
+void main()
+{
+	
+}

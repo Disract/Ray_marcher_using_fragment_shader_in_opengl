@@ -1,0 +1,76 @@
+#version 430 core
+#define MAX_STEPS 100
+#define MIN_HIT_DISTANCE 0.001
+#define MAX_TRACE_DISTANCE 1000.0
+
+uniform float t;
+uniform mat4 rotate;
+uniform float elapsed_time;
+
+out vec4 FragColor;
+in vec2 TexCoords;
+
+float sigmoid(float x)
+{
+    return 1.0 / (1.0 + exp(-x));
+}
+float distance_from_sphere(vec3 point,vec3 center,float radius)
+{
+    return (length(point-center) - radius);
+}
+float distance_from_plane(vec3 point,float plane_y_pos)
+{
+    return(plane_y_pos - point.y);
+}
+float map_the_world(vec3 point)
+{
+    float displacement  = sin(t * point.x) * sin(t * point.y) * sin(t * point.y) * 0.1;
+    //point = (vec4(point,1)*rotate).xyz;
+    vec3 point_temp1 = vec3(mod(point.x + 4, 8.0) - 4.0,mod(point.y + 4.0, 8.0) - 4.0, mod(point.z + 4.0, 8.0) - 4.0);
+    float sphere_1 = distance_from_sphere(point_temp1/max(1,sigmoid(t)) + vec3(0,0,0),vec3(0.0,0.0,0.0),1.0)*max(1,sigmoid(t));
+    float plane_1 = distance_from_plane(point,3);
+    return (sphere_1 + displacement);
+}
+vec3 calculate_normal(vec3 point)
+{
+   const vec3 small_step = vec3(0.001,0.0,0.0);
+   float gradient_x = map_the_world(point + small_step.xyy) - map_the_world(point - small_step.xyy);
+   float gradient_y = map_the_world(point + small_step.yxy) - map_the_world(point - small_step.yxy);
+   float gradient_z = map_the_world(point + small_step.yyx) - map_the_world(point - small_step.yyx);
+   vec3 normal = vec3(gradient_x,gradient_y,gradient_z);
+   return normalize(normal);
+}
+vec3 ray_march(vec3 ray_origin,vec3 ray_direction)
+{
+    float total_distance_covered = 0.0;
+    for(int i=0;i<MAX_STEPS;++i)
+    {
+        vec3 current_postion = ray_origin + total_distance_covered * ray_direction;
+        float distance_to_closest_surface = map_the_world(current_postion);
+        if(distance_to_closest_surface  < MIN_HIT_DISTANCE)
+        {
+            vec3 normal = calculate_normal(current_postion);
+            return normal * 0.0 + 0.0;
+        }
+        if(total_distance_covered > MAX_TRACE_DISTANCE)
+        {
+            break;
+        }
+        total_distance_covered += distance_to_closest_surface ;
+       
+    }
+     return vec3(1.0,1.0,1.0);
+}
+void main()
+{
+
+    float x = -(float(gl_FragCoord.x)*2.0-700)/700;
+    float y = -(float(gl_FragCoord.y)*2.0-700)/700;
+    
+    vec3 camera_postion = vec3(3.0,0.0,-2+elapsed_time);
+    vec3 ray_orgin = camera_postion;
+    vec3 ray_direction = normalize(vec3(float(x),float(y),1.0));
+    vec3 color = ray_march(ray_orgin,ray_direction);
+    float average_color = 0.299*color.x + 0.587*color.y + 0.114*color.z;
+    FragColor = vec4(color,1.0);
+}
