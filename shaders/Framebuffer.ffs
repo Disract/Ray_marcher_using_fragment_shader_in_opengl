@@ -1,0 +1,46 @@
+#version 430 core
+out vec4 color;
+in vec2 TexCoords;
+uniform sampler2D screenTexture;
+
+//thanks to VictorGordan
+const float offset_x = 1.0f / 700.0f;
+const float offset_y = 1.0f / 700.0f;
+
+vec2 offsets[9] = vec2[]
+(
+	vec2(-offset_x,offset_y),vec2(0.0f,offset_y),vec2(offset_x,offset_y),
+	vec2(-offset_x,0.0f),vec2(0.0f,0.0f),vec2(offset_x,0.0f),
+	vec2(-offset_x,-offset_y),vec2(0.0f,-offset_y),vec2(offset_x,-offset_y)
+
+);
+float hor_kernel[9] = float[]
+(
+	-1,0,1,
+	-2,0,2,
+	-1,0,1
+);
+float ver_kernel[9] = float[]
+(
+	1,2,1,
+	0,0,0,
+	-1,-2,-1
+);
+void main()
+{
+	//vec3 tex_color = vec3(texture(screenTexture,TexCoords));
+	//float average_color = 0.299*tex_color.x + 0.587*tex_color.y + 0.114*tex_color.z;
+	float Gx = 0.0f;
+	float Gy = 0.0f;
+
+	for(int i=0;i<9;i++)
+		Gx += vec3(texture(screenTexture,TexCoords + offsets[i])).z * hor_kernel[i];
+	for(int i=0;i<9;i++)
+		Gy += vec3(texture(screenTexture,TexCoords + offsets[i])).y * ver_kernel[i];	
+	
+	float final_rgb = sqrt(Gx*Gx+Gy*Gy);
+	final_rgb = step(1.0,final_rgb);
+	final_rgb = 1.0 - final_rgb;
+	color = vec4(final_rgb,final_rgb,final_rgb,1.0);
+	//color = vec4(vec3(texture(screenTexture,TexCoords)),1.0);
+}

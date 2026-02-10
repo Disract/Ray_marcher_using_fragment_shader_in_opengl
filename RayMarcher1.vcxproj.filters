@@ -1346,6 +1346,8 @@
     <None Include="shaders\FullQuad.ffs" />
     <None Include="shaders\FullQuad.vs" />
     <None Include="shaders\FullQuad1.ffs" />
+    <None Include="shaders\Framebuffer.vs" />
+    <None Include="shaders\Framebuffer.ffs" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="depdencies\lib\glfw3.lib" />

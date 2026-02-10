@@ -2,11 +2,11 @@
 C:\graphics-physics\RayMarcher1\depdencies\include\custom\ComputeShader.h(71,55): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
   (compiling source file 'Source.cpp')
   
-C:\graphics-physics\RayMarcher1\Source.cpp(122,45): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\graphics-physics\RayMarcher1\Source.cpp(123,48): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\graphics-physics\RayMarcher1\Source.cpp(169,45): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\graphics-physics\RayMarcher1\Source.cpp(170,48): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   Generating code
-  3 of 278 functions ( 1.1%) were compiled, the rest were copied from previous compilation.
+  1 of 279 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    7 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   RayMarcher1.vcxproj -> C:\graphics-physics\RayMarcher1\x64\Release\RayMarcher1.exe

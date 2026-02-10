@@ -595,6 +595,8 @@ shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <None Include="depdencies\include\glm\gtx\vector_query.inl" />
     <None Include="depdencies\include\glm\gtx\wrap.inl" />
     <None Include="shaders\frag1.ffs" />
+    <None Include="shaders\Framebuffer.ffs" />
+    <None Include="shaders\Framebuffer.vs" />
     <None Include="shaders\FullQuad.ffs" />
     <None Include="shaders\FullQuad.vs" />
     <None Include="shaders\FullQuad1.ffs" />
