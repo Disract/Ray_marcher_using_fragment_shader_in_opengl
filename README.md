@@ -13,6 +13,5 @@ Implemented using **OpenGL fragment shaders** in **C++**, built from scratch.
 ![Screenshot](render_sample/4.png)
 
 ## Demos
-- [Watch the demo](render_sample/1.mkv)
-- [Watch the demo](render_sample/output1.mkv)
-- [Watch the demo](render_sample/2.mkv)
+![Demo](render_sample/1.gif)
+![Demo](render_sample/2.gif)
